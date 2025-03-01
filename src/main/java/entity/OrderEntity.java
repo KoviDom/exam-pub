@@ -13,13 +13,16 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
-    private DrinkEntity drinkEntity;
+    @Column(nullable = false)
+    private String productName;
 
     @Column(nullable = false)
     private int amount;
 
     @Column(nullable = false)
     private double price;
+
+    @ManyToOne
+    private UserEntity userEntity;
 
 }

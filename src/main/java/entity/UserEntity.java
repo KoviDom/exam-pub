@@ -28,7 +28,7 @@ public class UserEntity {
     @Column(nullable = false)
     private double pocket;
 
-    @ManyToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     private List<OrderEntity> orders;
 
 }
