@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.ws.rs.NotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,15 +42,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDTO findById(long id) {
-        UserEntity entity = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User is not found with id: " + id));
-        return userMapper.toDTO(entity);
+        return userMapper.toDTO(fetchUserById(id));
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public class ResourceNotFoundException extends RuntimeException {
-        public ResourceNotFoundException(String message) {
-            super(message);
-        }
+    private UserEntity fetchUserById(long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User is not found with id: " + id));
     }
 }
